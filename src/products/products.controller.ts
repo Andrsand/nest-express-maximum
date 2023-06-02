@@ -4,13 +4,13 @@ import { Controller, Get, Param } from '@nestjs/common';
 export class ProductsController{
     
     @Get()
-    getAll() {
+    getAll():string {
         return'getAll'
     }
     
     @Get(':id')
-    getOne(@Param() params) {
-        return 'getOne' + params.id
+    getOne(@Param('id') id: string):string {
+        return 'getOne' + id
     }
 }
     
