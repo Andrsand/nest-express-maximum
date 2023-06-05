@@ -1,11 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Header, HttpCode, HttpStatus, Param, Post, Put, Redirect } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { url } from 'inspector';
 
 @Controller('products')
 export class ProductsController{
     
     @Get()
+   // @Redirect('https://google.com', 301)
     getAll():string {
         return'getAll'
     }
@@ -16,6 +18,8 @@ export class ProductsController{
     }
 
     @Post()
+    @HttpCode(HttpStatus.CREATED)
+    @Header('cache-Control', 'none')
     create(@Body() CreateProductDto: CreateProductDto): string {
         return `Title: ${CreateProductDto.title} Price: ${CreateProductDto.price}`
     }
