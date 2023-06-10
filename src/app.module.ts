@@ -4,9 +4,13 @@ import { AppService } from './app.service';
 import { ProductsController } from './products/products.controller';
 import { ProductsService } from './products/products.service';
 import { ProductsModule } from './products/products.module';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({ // @Module - это декоратор
-  imports: [ProductsModule],
+  imports: [
+    ProductsModule,
+    MongooseModule.forRoot('')
+  ],
   controllers: [AppController], // AppController из app.controller.ts
   providers: [AppService],
 })
