@@ -4,6 +4,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { url } from 'inspector';
 // import { Response, Request } from 'express';
 import { ProductsService } from './products.service';
+import { Product } from './schemas/product.schema';
 
 @Controller('products')
 export class ProductsController{
@@ -20,30 +21,30 @@ export class ProductsController{
     //     }
     
     @Get()
-    getAll() {
+    getAll(): Promise<Product[]> {
         return this.productsService.getAll()
     }
     
     @Get(':id')
-    getOne(@Param('id') id: string) {
+    getOne(@Param('id') id: string): Promise<Product>{
         return this.productsService.getById(id)
     }
 
     @Post()
     @HttpCode(HttpStatus.CREATED)
     @Header('cache-Control', 'none')
-    create(@Body() CreateProductDto: CreateProductDto) {
+    create(@Body() CreateProductDto: CreateProductDto): Promise<Product> {
         return this.productsService.create(CreateProductDto)
     }
 
     @Delete(':id')
-    remove(@Param('id') id: string) {
-        return 'Remove ' + id
+    remove(@Param('id') id: string): Promise<Product> {
+        return this.productsService.remove(id)
     }
 
     @Put(':id')
-    update(@Body() updateProductDto: UpdateProductDto, @Param('id') id: string) {
-        return 'Update ' + id
+    update(@Body() updateProductDto: UpdateProductDto, @Param('id') id: string): Promise<Product> {
+        return this.productsService.update(id, updateProductDto)
     }
 }
     
